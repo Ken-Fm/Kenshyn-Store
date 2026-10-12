@@ -1,0 +1,2641 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#b8172a">
+<title>KENSHYN JOKI</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+:root {
+  --red:#b8172a;
+  --red2:#e94358;
+  --dark:#23090f;
+  --text:#29151a;
+  --muted:#8c777d;
+  --line:#f0dce0;
+  --soft:#fff0f3;
+  --white:#fff;
+  --glow:rgba(233,67,88,.16);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:90px;
+}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:#fffafa;
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:active{transform:scale(.97)}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline:2px solid var(--red2);
+  outline-offset:3px;
+}
+
+a{color:inherit;text-decoration:none}
+
+button{
+  transition:
+    transform .2s,
+    background .25s,
+    box-shadow .25s,
+    color .25s;
+}
+
+.progress{
+  position:fixed;
+  top:0;
+  left:0;
+  height:3px;
+  width:0;
+  background:linear-gradient(90deg,#9b1024,#ff6579,#ffd0d6);
+  z-index:9999;
+}
+
+/* INTRO */
+
+.welcome{
+  position:fixed;
+  inset:0;
+  z-index:9998;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  color:white;
+  background:radial-gradient(circle at center,#77172b,#21050b 70%);
+  transition:opacity .8s,visibility .8s;
+}
+
+.welcome.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.welcome-content{
+  animation:rise .8s both;
+  padding:20px;
+}
+
+.monogram{
+  display:grid;
+  place-items:center;
+  width:88px;
+  height:88px;
+  margin:0 auto 25px;
+  border:1px solid #ff9ca8;
+  border-radius:24px;
+  background:linear-gradient(140deg,#f66c80,#a90d24);
+  font-size:42px;
+  font-weight:800;
+  letter-spacing:-10px;
+  padding-right:9px;
+  box-shadow:0 10px 40px #f34b6033;
+}
+
+.welcome small{
+  letter-spacing:5px;
+  color:#ffb9c2;
+  font-size:10px;
+}
+
+.welcome h1{
+  font:700 clamp(30px,8vw,52px) 'Playfair Display',serif;
+  margin-top:12px;
+}
+
+.welcome h1 span{color:#ff7588}
+
+.welcome-line{
+  height:2px;
+  width:0;
+  background:#ff647a;
+  margin:22px auto;
+  animation:line 1s .3s forwards;
+}
+
+@keyframes line{
+  to{width:170px}
+}
+
+@keyframes rise{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:none}
+}
+
+@keyframes float{
+  50%{transform:translateY(-8px)}
+}
+
+@keyframes shine{
+  0%,55%{background-position:150% 0}
+  100%{background-position:-100% 0}
+}
+
+@keyframes glow{
+  50%{box-shadow:0 0 28px #ed40572a}
+}
+
+/* NAVIGATION */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:#fffafaef;
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+
+.nav{
+  max-width:1200px;
+  margin:auto;
+  padding:12px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
+}
+
+.brand-icon{
+  width:43px;
+  height:43px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(140deg,#ff788a,#b8172a 70%,#790819);
+  color:white;
+  font-size:23px;
+  font-weight:800;
+  letter-spacing:-6px;
+  padding-right:5px;
+  box-shadow:0 7px 18px #b8172a22;
+}
+
+.brand-name{
+  font-size:12px;
+  letter-spacing:3px;
+  font-weight:800;
+}
+
+.brand-name small{
+  display:block;
+  color:var(--red);
+  font-size:9px;
+  letter-spacing:4px;
+  margin-top:3px;
+}
+
+.links{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:3px;
+  flex-wrap:wrap;
+}
+
+.links button{
+  border:0;
+  background:transparent;
+  border-radius:9px;
+  padding:10px 9px;
+  color:#765c63;
+  font-size:10px;
+  font-weight:800;
+}
+
+.links button:hover,
+.links button.active{
+  background:var(--soft);
+  color:var(--red);
+  transform:translateY(-2px);
+  box-shadow:0 5px 16px #b8172a12;
+}
+
+.links .order-nav{
+  background:var(--red);
+  color:white;
+  box-shadow:0 7px 18px #b8172a28;
+}
+
+.menu{
+  display:none;
+  border:1px solid var(--line);
+  background:white;
+  padding:9px 12px;
+  border-radius:10px;
+}
+
+/* MAIN */
+
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:0 18px 110px;
+}
+
+/* HERO */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  margin:25px 0;
+  border-radius:25px;
+  min-height:370px;
+  padding:clamp(25px,5vw,58px);
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  align-items:center;
+  gap:25px;
+  background:linear-gradient(115deg,#20060c,#600e20 55%,#b8172a);
+  color:white;
+  box-shadow:0 20px 50px #60102018;
+}
+
+.hero:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:
+    linear-gradient(100deg,#19030bdc,#33030b7a),
+    url("Assets pict/bg.jpg") center/cover;
+  opacity:.75;
+}
+
+.hero:after{
+  content:"";
+  position:absolute;
+  width:300px;
+  height:300px;
+  right:-80px;
+  top:-130px;
+  border:1px solid #ffb5bf55;
+  border-radius:50%;
+  box-shadow:
+    0 0 0 35px #ffffff08,
+    0 0 0 70px #ffffff06;
+  pointer-events:none;
+}
+
+.hero-copy,.hero-logo{
+  position:relative;
+  z-index:1;
+}
+
+.eyebrow{
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:#ffadba;
+  font-weight:800;
+  margin-bottom:16px;
+}
+
+.hero h2{
+  font:700 clamp(36px,6vw,67px)/1.07 'Playfair Display',serif;
+  letter-spacing:-1px;
+}
+
+.hero h2 span{color:#ff7185}
+
+.hero p{
+  font-size:12px;
+  line-height:1.9;
+  color:#f7dfe3;
+  max-width:490px;
+  margin:17px 0 24px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.primary,.outline{
+  border:0;
+  border-radius:11px;
+  padding:12px 17px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.primary{
+  background:linear-gradient(110deg,#a70e24,#ed4057);
+  color:white;
+  box-shadow:0 8px 20px #bd18302b;
+}
+
+.primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 26px #bd183044;
+}
+
+.outline{
+  border:1px solid #ffffff55;
+  background:#ffffff0b;
+  color:white;
+}
+
+.outline:hover{
+  background:#ffffff22;
+  transform:translateY(-3px);
+}
+
+.hero-logo{
+  justify-self:end;
+  width:min(100%,270px);
+  aspect-ratio:1;
+  border-radius:50%;
+  border:1px solid #ff9ca855;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle,#f53c5633,transparent 70%);
+  animation:float 5s ease-in-out infinite;
+  filter:drop-shadow(0 0 22px #ff5f781f);
+}
+
+.hero-logo div{
+  width:70%;
+  aspect-ratio:1;
+  border:1px solid #ff9ca899;
+  border-radius:40%;
+  display:grid;
+  place-items:center;
+  background:#ffffff0a;
+  box-shadow:inset 0 0 40px #ff6c8020;
+  transform:rotate(-10deg);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-logo div:after{
+  content:"";
+  position:absolute;
+  inset:-60%;
+  background:linear-gradient(110deg,transparent 42%,#ffffff24 49%,transparent 56%);
+  transform:translateX(-65%) rotate(20deg);
+  animation:logoShine 6s ease-in-out infinite;
+}
+
+@keyframes logoShine{
+  0%,55%{transform:translateX(-65%) rotate(20deg)}
+  80%,100%{transform:translateX(65%) rotate(20deg)}
+}
+
+.hero-logo span{
+  font-size:clamp(65px,10vw,105px);
+  font-weight:800;
+  letter-spacing:-20px;
+  padding-right:17px;
+  text-shadow:0 8px 30px #ff344d88;
+  transform:rotate(10deg);
+}
+
+/* STATISTICS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin:20px 0 35px;
+}
+
+.stat{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:15px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:white;
+  transition:.3s;
+}
+
+.stat:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 30px #5a102010;
+}
+
+.stat-icon{
+  width:38px;
+  height:38px;
+  flex-shrink:0;
+  border-radius:12px;
+  background:var(--soft);
+  color:var(--red);
+  display:grid;
+  place-items:center;
+  font-weight:800;
+  font-size:12px;
+}
+
+.stat b{display:block;font-size:11px}
+
+.stat small{
+  display:block;
+  font-size:9px;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+/* SECTION */
+
+.section{padding:23px 0 30px}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:15px;
+  margin-bottom:19px;
+}
+
+.kicker{
+  font-size:9px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--red);
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+.section h2{
+  font:700 clamp(25px,4vw,36px) 'Playfair Display',serif;
+}
+
+.section-head p{
+  font-size:11px;
+  line-height:1.8;
+  color:var(--muted);
+  max-width:440px;
+}
+
+/* SERVICE CARDS */
+
+.service-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.service-card{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  text-align:left;
+  border:1px solid var(--line);
+  background:white;
+  border-radius:17px;
+  padding:20px;
+  min-height:165px;
+  transition:transform .3s,box-shadow .3s,border-color .3s;
+  box-shadow:0 5px 18px #480c1906;
+}
+
+.service-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(125deg,#fff,transparent 42%,#fff5f6);
+}
+
+.service-card:after{
+  content:"";
+  position:absolute;
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  right:-50px;
+  bottom:-60px;
+  background:#ffe8eb;
+  transition:.35s;
+  z-index:-1;
+}
+
+.service-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 15px 35px #5a102015;
+  border-color:#e5a0aa;
+}
+
+.service-card:hover:after{
+  transform:scale(1.5);
+  background:#ffd6dc;
+}
+
+.card-icon{
+  width:38px;
+  height:38px;
+  border:1px solid #f5d8de;
+  border-radius:12px;
+  background:var(--soft);
+  color:var(--red);
+  display:grid;
+  place-items:center;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.4px;
+  margin-bottom:15px;
+  box-shadow:inset 0 1px 0 #fff,0 5px 13px #b8172a10;
+}
+
+.service-card h3{
+  font-size:14px;
+  margin-bottom:7px;
+}
+
+.service-card p{
+  font-size:10px;
+  color:var(--muted);
+  line-height:1.8;
+}
+
+.card-foot{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:var(--red);
+  font-size:10px;
+  font-weight:800;
+  margin-top:15px;
+}
+
+.arrow{
+  width:25px;
+  height:25px;
+  border:1px solid #efc5cb;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  transition:.25s;
+}
+
+.service-card:hover .arrow{
+  background:var(--red);
+  color:white;
+  transform:rotate(-45deg);
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(15px);
+  transition:opacity .6s,transform .6s;
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+/* PAGE HEADER */
+
+.page{animation:rise .35s both}
+
+.page-top{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  margin:25px 0 20px;
+  padding:27px;
+  border-radius:22px;
+  color:white;
+  background:linear-gradient(115deg,#22060d,#741126 65%,#ca2540);
+  box-shadow:0 15px 36px #560a1c1f;
+}
+
+.page-top:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(110deg,transparent 25%,#ffffff0c 48%,transparent 65%);
+  background-size:220% 100%;
+  animation:panelShine 9s ease-in-out infinite;
+}
+
+@keyframes panelShine{
+  0%,65%{background-position:150% 0}
+  100%{background-position:-80% 0}
+}
+
+.page-top:after{
+  content:"";
+  position:absolute;
+  right:-70px;
+  top:-140px;
+  width:300px;
+  height:300px;
+  border:1px solid #ffffff25;
+  border-radius:50%;
+  box-shadow:0 0 0 35px #ffffff06,0 0 0 70px #ffffff04;
+  z-index:-1;
+}
+
+.back{
+  position:relative;
+  z-index:1;
+  margin-bottom:17px;
+  padding:8px 11px;
+  border:1px solid #ffffff55;
+  background:#ffffff0c;
+  color:white;
+  border-radius:9px;
+  font-size:10px;
+}
+
+.back:hover{background:#ffffff20}
+
+.page-top h1{
+  position:relative;
+  z-index:1;
+  font:700 clamp(30px,5vw,46px) 'Playfair Display',serif;
+}
+
+.page-top p{
+  position:relative;
+  z-index:1;
+  margin-top:10px;
+  font-size:11px;
+  line-height:1.9;
+  color:#f4dbe0;
+  max-width:680px;
+}
+
+/* FILTERS */
+
+.filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:16px;
+  padding:3px 1px 8px;
+}
+
+.chip{
+  border:1px solid var(--line);
+  background:white;
+  color:#765b62;
+  border-radius:30px;
+  padding:9px 13px;
+  font-size:10px;
+  font-weight:800;
+  box-shadow:0 3px 10px #460a1906;
+  transition:all .22s;
+}
+
+.chip:hover,.chip.active{
+  background:var(--red);
+  color:white;
+  border-color:var(--red);
+  transform:translateY(-2px);
+}
+
+/* PRICE CARDS */
+
+.price-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.price-card{
+  position:relative;
+  isolation:isolate;
+  border:1px solid var(--line);
+  border-radius:19px;
+  background:white;
+  padding:15px;
+  transition:transform .28s,box-shadow .28s,border-color .28s;
+  overflow:hidden;
+  box-shadow:0 6px 18px #410a1609;
+}
+
+.price-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  z-index:2;
+  background:linear-gradient(120deg,transparent 20%,#ffffff72 47%,transparent 65%);
+  background-size:240% 100%;
+  background-position:150% 0;
+  opacity:0;
+  transition:opacity .25s;
+}
+
+.price-card:hover:before{
+  opacity:.8;
+  animation:shine 1s ease forwards;
+}
+
+.price-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 30px #5a102015;
+  border-color:#e5a0aa;
+}
+
+.price-card.selected{
+  border:1.5px solid var(--red);
+  box-shadow:0 0 0 3px #bd183012,0 10px 25px #bd183014;
+}
+
+.price-image{
+  height:155px;
+  border:1px solid #f1d9de;
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:14px;
+  background:linear-gradient(135deg,#28060e,#a71d36);
+  box-shadow:inset 0 0 0 1px #ffffff12;
+  position:relative;
+}
+
+.price-image:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(180deg,transparent 55%,#19030940);
+}
+
+.price-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .65s,filter .4s;
+}
+
+.price-card:hover .price-image img{
+  transform:scale(1.06);
+  filter:saturate(1.08) brightness(1.04);
+}
+
+.price-image.no-image:after{
+  content:"KENSHYN JOKI";
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:white;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:4px;
+}
+
+.price-card h3{
+  font-size:14px;
+  letter-spacing:-.2px;
+  margin-bottom:7px;
+}
+
+.desc{
+  font-size:10px;
+  line-height:1.8;
+  color:var(--muted);
+  min-height:42px;
+}
+
+.desc small{
+  display:block;
+  margin-top:4px;
+  color:var(--red);
+  font-weight:700;
+}
+
+.price-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  border-top:1px solid #f4e7e9;
+  margin-top:14px;
+  padding-top:12px;
+}
+
+.price{
+  color:var(--red);
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:-.2px;
+}
+
+.price small{
+  display:block;
+  font-size:9px;
+  color:#a38e94;
+  margin-top:4px;
+  font-weight:500;
+}
+
+.add{
+  border:1px solid #edc2c9;
+  background:#fff5f7;
+  color:var(--red);
+  border-radius:11px;
+  padding:9px 11px;
+  font-size:10px;
+  font-weight:800;
+  white-space:nowrap;
+  min-height:37px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  box-shadow:0 4px 12px #b8172a0b;
+  transition:all .22s;
+}
+
+.add:hover,.add.added{
+  background:var(--red);
+  color:white;
+  transform:translateY(-2px);
+  box-shadow:0 7px 18px #b8172a29;
+}
+
+/* DAILY ACCOUNT */
+
+.daily-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:15px;
+}
+
+.daily-card,.request-card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 5px 18px #480c1906;
+}
+
+.daily-card h3,.request-card h3{
+  font:700 23px 'Playfair Display',serif;
+  margin:6px 0;
+}
+
+.daily-card>p,.request-card>p{
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.8;
+  margin-bottom:15px;
+}
+
+.daily-choice{
+  border-top:1px solid var(--line);
+  padding:14px 0;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  align-items:center;
+}
+
+.daily-choice span b{font-size:11px}
+
+.daily-choice span small{
+  font-size:9px;
+  color:var(--muted);
+}
+
+.daily-choice>b{
+  font-size:12px;
+  color:var(--red);
+}
+
+.daily-choice .add{
+  grid-column:1/-1;
+  justify-self:start;
+}
+
+.tags{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.tag{
+  background:var(--soft);
+  border:1px solid #f4d4db;
+  color:var(--red);
+  padding:7px 10px;
+  border-radius:30px;
+  font-size:10px;
+  font-weight:700;
+}
+
+.note{
+  padding:14px;
+  border-radius:12px;
+  background:#fff3f5;
+  border:1px solid #f4d8de;
+  color:#805963;
+  font-size:10px;
+  line-height:1.9;
+  margin-top:18px;
+}
+
+/* FOOTER */
+
+footer{
+  background:#23090f;
+  color:#fff0f3;
+  padding:35px 20px;
+  text-align:center;
+}
+
+footer b{
+  letter-spacing:4px;
+  font-size:13px;
+}
+
+footer p{
+  font-size:10px;
+  color:#d7b5bd;
+  line-height:1.9;
+  margin-top:10px;
+}
+
+footer a{
+  color:#ffb8c2;
+  text-decoration:underline;
+  text-underline-offset:4px;
+}
+
+/* FLOATING CHECKOUT BAR */
+
+.order-bar{
+  position:fixed;
+  left:50%;
+  bottom:14px;
+  transform:translate(-50%,130%);
+  width:min(740px,calc(100% - 24px));
+  z-index:150;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:13px 15px;
+  border:1px solid #edc5cd;
+  border-radius:17px;
+  background:#fffafaf2;
+  backdrop-filter:blur(18px);
+  box-shadow:0 16px 48px #4b0a182e,0 0 24px #e9435814;
+  transition:transform .35s;
+}
+
+.order-bar.show{
+  transform:translate(-50%,0);
+}
+
+.bar-info{min-width:0}
+
+.bar-info b{
+  font-size:12px;
+  display:block;
+}
+
+.bar-info small{
+  font-size:10px;
+  color:var(--muted);
+  display:block;
+  margin-top:4px;
+  max-width:300px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.bar-total{
+  text-align:right;
+  white-space:nowrap;
+}
+
+.bar-total b{
+  display:block;
+  font-size:13px;
+  color:var(--red);
+}
+
+.bar-total small{
+  font-size:9px;
+  color:var(--muted);
+}
+
+.bar-button{
+  background:var(--red);
+  color:white;
+  border:0;
+  border-radius:10px;
+  padding:12px 15px;
+  font-size:10px;
+  font-weight:800;
+  white-space:nowrap;
+  box-shadow:0 7px 18px #b8172a3b;
+}
+
+.bar-button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px #b8172a4d;
+}
+
+/* CHECKOUT MODAL */
+
+.backdrop{
+  position:fixed;
+  inset:0;
+  z-index:500;
+  background:#180309c7;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+  backdrop-filter:blur(7px);
+}
+
+.backdrop.open{
+  display:flex;
+  animation:fade .2s;
+}
+
+@keyframes fade{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+.modal{
+  position:relative;
+  width:min(560px,100%);
+  max-height:92dvh;
+  overflow:auto;
+  background:linear-gradient(145deg,#fffdfd,#fff5f7 75%,#fff);
+  border:1px solid #f3d0d7;
+  border-radius:21px;
+  padding:22px;
+  box-shadow:0 30px 100px #0006,0 0 40px #e943581f;
+  animation:rise .3s both;
+}
+
+.modal:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:4px;
+  border-radius:21px 21px 0 0;
+  background:linear-gradient(90deg,#9b1024,#ff7386,#f7c2ca,#b8172a);
+  background-size:200% 100%;
+  animation:checkoutGlow 5s linear infinite;
+}
+
+@keyframes checkoutGlow{
+  to{background-position:200% 0}
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+  gap:10px;
+  margin-bottom:18px;
+  padding-bottom:15px;
+  border-bottom:1px solid #f2dfe3;
+}
+
+.modal h2{
+  font:700 27px 'Playfair Display',serif;
+  letter-spacing:-.5px;
+}
+
+.modal-head p{
+  font-size:10px;
+  color:var(--muted);
+  line-height:1.8;
+  margin-top:5px;
+}
+
+.close{
+  border:1px solid var(--line);
+  background:white;
+  border-radius:10px;
+  padding:8px 11px;
+}
+
+.close:hover{
+  background:#fff0f3;
+  color:var(--red);
+}
+
+.summary{
+  border:1px solid var(--line);
+  background:white;
+  border-radius:15px;
+  padding:13px;
+  margin-bottom:15px;
+  box-shadow:0 5px 18px #430a1909;
+}
+
+.summary-item{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  font-size:10px;
+  line-height:1.6;
+  padding:8px 0;
+  border-bottom:1px solid #f4e7e9;
+}
+
+.summary-item:last-child{border:0}
+
+.summary-item span{
+  overflow-wrap:anywhere;
+}
+
+.summary-item b{
+  color:var(--red);
+  white-space:nowrap;
+}
+
+.summary-total{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid #f4e4e7;
+  font-size:12px;
+  font-weight:800;
+}
+
+.summary-total b{color:var(--red)}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:12px;
+}
+
+.field.full{grid-column:1/-1}
+
+.field label{
+  font-size:10px;
+  font-weight:800;
+}
+
+.field input,.field select,.field textarea{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:white;
+  padding:12px;
+  font-size:11px;
+  color:var(--text);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:#df7b8a;
+  box-shadow:0 0 0 3px #e9435814;
+  outline:0;
+}
+
+.field textarea{
+  min-height:75px;
+  resize:vertical;
+}
+
+/* PAYMENT & COPY WALLET */
+
+.pay-info{
+  position:relative;
+  font-size:10px;
+  line-height:1.9;
+  padding:13px;
+  border-radius:14px;
+  background:linear-gradient(125deg,#fff0f3,#fff9fa);
+  border:1px solid #f3d4da;
+  margin-bottom:12px;
+  color:#744c57;
+  box-shadow:inset 0 1px 0 #fff;
+}
+
+.wallet-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:10px;
+  padding:10px;
+  background:#fff;
+  border:1px solid #f0d4da;
+  border-radius:11px;
+}
+
+.wallet-number{
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:.6px;
+  color:var(--red);
+  font-variant-numeric:tabular-nums;
+  overflow-wrap:anywhere;
+}
+
+.copy-wallet{
+  flex-shrink:0;
+  border:0;
+  border-radius:9px;
+  padding:10px 12px;
+  background:var(--red);
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
+  box-shadow:0 5px 13px #b8172a33;
+  transition:.2s;
+}
+
+.copy-wallet:hover{
+  background:#921022;
+  transform:translateY(-1px);
+}
+
+.copy-wallet:active{transform:scale(.96)}
+
+.warning{
+  font-size:10px;
+  line-height:1.9;
+  padding:12px;
+  background:#fff7e8;
+  border:1px solid #f0dfb6;
+  color:#76551d;
+  border-radius:10px;
+  margin-bottom:14px;
+}
+
+.form-actions{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+}
+
+.form-actions button{
+  flex:1;
+  min-width:120px;
+}
+
+.form-actions .primary{
+  box-shadow:0 8px 20px #b8172a33;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  z-index:9999;
+  left:50%;
+  top:18px;
+  transform:translate(-50%,-100px);
+  opacity:0;
+  padding:12px 17px;
+  background:#280912;
+  color:white;
+  border:1px solid #bd1830;
+  border-radius:12px;
+  font-size:11px;
+  box-shadow:0 12px 35px #0003,0 0 18px #e943581f;
+  transition:.3s;
+}
+
+.toast.show{
+  transform:translate(-50%,0);
+  opacity:1;
+}
+
+.empty{
+  border:1px dashed #e8c6cd;
+  border-radius:15px;
+  padding:35px 15px;
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+  .nav{flex-wrap:wrap}
+  .menu{display:block}
+  .links{
+    display:none;
+    width:100%;
+    justify-content:flex-start;
+    padding:8px 0;
+  }
+  .links.open{display:flex}
+  .links button{font-size:10px}
+  .hero{min-height:320px}
+  .hero-logo{width:200px}
+  .service-grid,.price-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:560px){
+  main{
+    padding-left:13px;
+    padding-right:13px;
+  }
+
+  .nav{padding:10px 13px}
+
+  .hero{
+    grid-template-columns:1fr;
+    padding:27px 21px;
+    min-height:0;
+    gap:24px;
+  }
+
+  .hero-logo{
+    justify-self:center;
+    width:135px;
+  }
+
+  .hero-logo span{font-size:65px}
+
+  .stats{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px;
+  }
+
+  .stat{padding:11px;gap:8px}
+  .stat-icon{width:33px;height:33px}
+
+  .section-head{
+    align-items:start;
+    flex-direction:column;
+  }
+
+  .service-grid,.price-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px;
+  }
+
+  .service-card{
+    padding:14px;
+    min-height:155px;
+  }
+
+  .service-card h3{font-size:12px}
+  .service-card p{font-size:10px}
+
+  .price-card{padding:11px}
+  .price-image{height:120px}
+  .price-card h3{font-size:12px}
+  .desc{font-size:9px;min-height:40px}
+
+  .price-bottom{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:9px;
+  }
+
+  .price{font-size:12px}
+
+  .add{
+    width:100%;
+    padding:9px 5px;
+    min-height:36px;
+  }
+
+  .daily-grid{grid-template-columns:1fr}
+  .page-top{padding:22px}
+
+  .order-bar{
+    bottom:9px;
+    padding:10px;
+    gap:7px;
+  }
+
+  .bar-info b{font-size:10px}
+  .bar-info small{max-width:95px;font-size:9px}
+  .bar-total b{font-size:11px}
+  .bar-button{padding:11px 9px;font-size:9px}
+
+  .modal{
+    padding:16px;
+    max-height:94dvh;
+  }
+
+  .form-grid{grid-template-columns:1fr}
+  .field.full{grid-column:auto}
+
+  .wallet-row{
+    align-items:stretch;
+    flex-direction:column;
+  }
+
+  .wallet-number{font-size:14px}
+  .copy-wallet{width:100%;padding:11px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    animation-duration:.01ms!important;
+    transition-duration:.01ms!important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="welcome" id="welcome">
+  <div class="welcome-content">
+    <div class="monogram">KK</div>
+    <small>WELCOME TO</small>
+    <h1>KENSHYN <span>JOKI</span></h1>
+    <div class="welcome-line"></div>
+    <small>GENSHIN IMPACT SERVICE</small>
+  </div>
+</div>
+
+<header>
+  <nav class="nav">
+    <a href="#" class="brand" data-page="home">
+      <div class="brand-icon">KK</div>
+      <div class="brand-name">KENSHYN<small>JOKI SERVICE</small></div>
+    </a>
+
+    <button class="menu" id="menu" aria-label="Buka menu">MENU</button>
+
+    <div class="links" id="links">
+      <button data-page="home" class="active">Beranda</button>
+      <button id="navTesti">Testimoni</button>
+      <button data-page="region">Explore Region</button>
+      <button data-page="location">Explore Location</button>
+      <button data-page="world">Another World</button>
+      <button data-page="quest">Quest</button>
+      <button data-page="daily">Daily Account</button>
+      <button data-page="material">Material</button>
+      <button class="order-nav" id="navOrder">
+        Pesanan <span id="navCount">0</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div id="app"></div>
+</main>
+
+<footer>
+  <b>KENSHYN JOKI</b>
+  <p>Genshin Impact Service<br>Explore · Quest · Farming · Daily Account</p>
+  <p>Kontak dan pemesanan melalui WhatsApp admin.<br>Harga dapat dikonfirmasi sebelum pengerjaan dimulai.</p>
+  <p>
+    <a href="https://whatsapp.com/channel/0029Vb96qWmLY6dCoBPB5D1"
+       target="_blank" rel="noopener noreferrer">
+      Lihat Saluran Testimoni Kenshyn
+    </a>
+  </p>
+  <p>© 2026 Kenshyn Joki. All rights reserved.</p>
+</footer>
+
+<!-- FLOATING CART -->
+
+<div class="order-bar" id="orderBar">
+  <div class="bar-info">
+    <b><span id="barCount">0</span> layanan dipilih</b>
+    <small id="barItems">Belum ada layanan dipilih</small>
+  </div>
+
+  <div class="bar-total">
+    <small>TOTAL PESANAN</small>
+    <b id="barTotal">0 IDR</b>
+  </div>
+
+  <button class="bar-button" id="openOrder">CHECKOUT</button>
+</div>
+
+<!-- CHECKOUT -->
+
+<div class="backdrop" id="backdrop">
+  <div class="modal">
+
+    <div class="modal-head">
+      <div>
+        <div class="kicker">ORDER SERVICE</div>
+        <h2>Konfirmasi Pesanan</h2>
+        <p>Periksa daftar joki sebelum melanjutkan ke WhatsApp.</p>
+      </div>
+      <button class="close" id="close">Tutup</button>
+    </div>
+
+    <div class="summary">
+      <div id="summaryList"></div>
+      <div class="summary-total">
+        <span>Total sementara</span>
+        <b id="summaryTotal">0 IDR</b>
+      </div>
+    </div>
+
+    <form id="orderForm">
+      <div class="form-grid">
+
+        <div class="field full">
+          <label for="recipient">Penerima / Nama pelanggan *</label>
+          <input id="recipient" name="recipient"
+                 placeholder="Nama penerima pesanan" required>
+        </div>
+
+        <div class="field full">
+          <label for="uid">UID Genshin Impact (opsional)</label>
+          <input id="uid" name="uid" inputmode="numeric"
+                 placeholder="Masukkan UID jika diperlukan">
+        </div>
+
+        <div class="field">
+          <label for="payment">Metode pembayaran *</label>
+          <select id="payment" required>
+            <option value="">Pilih pembayaran</option>
+            <option value="DANA">DANA</option>
+            <option value="GoPay">GoPay</option>
+            <option value="OVO">OVO</option>
+            <option value="QRIS">QRIS</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="payer">Nomor pengirim (opsional)</label>
+          <input id="payer" inputmode="tel"
+                 placeholder="Nomor pembayaran kamu">
+        </div>
+
+        <div class="field full">
+          <label for="workerNote">Pesan untuk worker</label>
+          <textarea id="workerNote"
+            placeholder="Contoh: kerjakan Fontaine terlebih dahulu, jangan mengubah build karakter..."></textarea>
+        </div>
+
+      </div>
+
+      <div class="pay-info" id="paymentInfo">
+        Pilih metode pembayaran untuk melihat instruksi pembayaran.
+      </div>
+
+      <div class="warning">
+        <b>PERHATIAN PEMBAYARAN</b><br>
+        Jika membayar melalui transfer, kirim screenshot bukti pembayaran yang lengkap ke WhatsApp admin. Untuk QRIS, minta kode QRIS kepada admin terlebih dahulu. Jangan kirim PIN atau OTP pembayaran.
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="outline"
+          style="background:white;color:#76545d;border-color:#e9d0d5"
+          id="clear">Kosongkan</button>
+
+        <button type="submit" class="primary">
+          Kirim ke WhatsApp
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+/* KONFIGURASI */
+
+const WA = "628989092132";
+const PAYMENT_NUMBER = "08987623603";
+const TESTI_URL = "https://whatsapp.com/channel/0029Vb96qWmLY6dCoBPB5D1";
+
+/* DATA HARGA */
+
+const data = {
+  region: [
+    ["Mondstadt",150000,"Explore seluruh region + quest."],
+    ["Liyue",230000,"Explore seluruh region + quest."],
+    ["Inazuma",280000,"Explore seluruh region + quest."],
+    ["Sumeru",360000,"Explore seluruh region + quest."],
+    ["Fontaine",375000,"Explore seluruh region + quest."],
+    ["Natlan",370000,"Explore seluruh region + quest."],
+    ["Nod-Krai",375000,"Explore seluruh region + quest."]
+  ],
+
+  location: [
+    ["Mondstadt",45000,"Explore per lokasi, 0–100%."],
+    ["Liyue",45000,"Explore per lokasi, 0–100%."],
+    ["Inazuma",55000,"Explore per lokasi, 0–100%."],
+    ["Sumeru",70000,"Explore per lokasi, 0–100%."],
+    ["Fontaine",70000,"Explore per lokasi, 0–100%."],
+    ["Natlan",60000,"Explore per lokasi, 0–100%."],
+    ["Nod-Krai",50000,"Explore per lokasi, 0–100%."],
+    ["Snezhnaya",70000,"Explore per lokasi, 0–100%."],
+    ["Chenyu Vale",60000,"Explore per lokasi, 0–100%."]
+  ],
+
+  world: [
+    ["Temple of Space",50000,"Explore lokasi dunia lain, 0–100%."],
+    ["Dragonspine",45000,"Explore lokasi dunia lain, 0–100%."],
+    ["Enkanomiya",50000,"Explore lokasi dunia lain, 0–100%."],
+    ["The Chasm",50000,"Explore lokasi dunia lain, 0–100%."],
+    ["Sea of Bygone Eras",50000,"Explore lokasi dunia lain, 0–100%."],
+    ["Ancient Sacred Mountain",50000,"Explore lokasi dunia lain, 0–100%."],
+    ["Frost Moon",50000,"Explore lokasi dunia lain, 0–100%."]
+  ],
+
+  quest: [
+    ["World Quest",5000,"Harga per bab."],
+    ["Archon Quest",10000,"Harga per bab."],
+    ["Side Quest",2000,"Harga per bab."],
+    ["Daily Quest",500,"Paket 4 daily quest."],
+    ["Event Quest",5000,"Quest event sesuai ketersediaan."],
+    ["Story Quest",6000,"Harga per bab."],
+    ["Quest tambahan Explore Another World",20000,"Tambahan quest untuk paket Explore Another World."]
+  ],
+
+  material: [
+    ["50 Material",5000,"Material ascension, talent, mora, atau bahan sesuai request."],
+    ["100 Material",10000,"Jumlah dan jenis material dikonfirmasi sebelum pengerjaan."],
+    ["Farming Mora",5000,"Farming mora sesuai kebutuhan."],
+    ["Farming Crystal Chunk",5000,"Farming crystal chunk sesuai request."],
+    ["Farming Crystal Core",5000,"Farming crystal core sesuai request."]
+  ]
+};
+
+/* ESTIMASI WAKTU REGION */
+
+const times = {
+  "Mondstadt":"2–3 jam",
+  "Liyue":"4–5 jam",
+  "Inazuma":"6–7 jam",
+  "The Chasm":"3 jam",
+  "Sumeru":"15 jam",
+  "Fontaine":"16 jam",
+  "Natlan":"15 jam",
+  "Nod-Krai":"30 jam (estimasi 2 hari)",
+  "Snezhnaya":"3 jam (1 bab)"
+};
+
+/* INFORMASI PAGE */
+
+const info = {
+  region:[
+    "Explore Region",
+    "FULL REGION SERVICE",
+    "Paket explore satu region beserta quest sesuai paket. Estimasi waktu dapat berubah tergantung progres akun, jumlah konten, dan kondisi permainan."
+  ],
+
+  location:[
+    "Explore Location",
+    "PER LOKASI",
+    "Pilih region yang ingin dieksplorasi. Harga berlaku per lokasi dan target eksplorasi 0–100%, dengan detail area yang dikonfirmasi bersama admin."
+  ],
+
+  world:[
+    "Explore Another World",
+    "SPECIAL AREA",
+    "Pilih area khusus yang ingin diselesaikan. Tambahan quest sebesar 20.000 IDR berlaku untuk layanan yang sesuai."
+  ],
+
+  quest:[
+    "Quest Service",
+    "QUEST COMPLETION",
+    "Pilih jenis quest sesuai kebutuhan akun. Harga mengikuti satuan yang tertulis pada masing-masing layanan."
+  ],
+
+  material:[
+    "Material & Farming",
+    "MATERIAL SERVICE",
+    "Layanan farming material, mora, crystal, dan kebutuhan pengembangan karakter. Jelaskan jenis serta jumlah yang dibutuhkan di catatan worker."
+  ]
+};
+
+let active = "home";
+let cart = [];
+let toastTimer;
+
+const app = document.getElementById("app");
+
+/* UTILITIES */
+
+function fmt(n){
+  return Number(n).toLocaleString("id-ID") + " IDR";
+}
+
+function toast(message){
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(()=>{
+    el.classList.remove("show");
+  },2200);
+}
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[c]);
+}
+
+function reveal(){
+  const nodes = document.querySelectorAll(".reveal");
+
+  if(!("IntersectionObserver" in window)){
+    nodes.forEach(n=>n.classList.add("visible"));
+    return;
+  }
+
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add("visible");
+        io.unobserve(entry.target);
+      }
+    });
+  },{threshold:.08});
+
+  nodes.forEach(n=>io.observe(n));
+}
+
+/* NAVIGATION */
+
+function bindPages(){
+  document.querySelectorAll("[data-page]").forEach(button=>{
+    button.onclick=e=>{
+      e.preventDefault();
+      go(button.dataset.page);
+      window.scrollTo({top:0,behavior:"smooth"});
+    };
+  });
+}
+
+/* HOMEPAGE */
+
+function homeHTML(){
+  const cards = [
+    ["EX","Explore Region","Jelajahi seluruh region dengan paket eksplorasi.","region"],
+    ["LO","Explore Location","Pilih area tertentu yang ingin diselesaikan.","location"],
+    ["OW","Another World","Layanan eksplorasi area khusus.","world"],
+    ["QU","Quest Service","Archon, world, side, story, dan event quest.","quest"],
+    ["DA","Daily Account","Paket pengelolaan akun 7 hari atau 1 bulan.","daily"],
+    ["MF","Material & Farming","Farming material, mora, dan kebutuhan karakter.","material"]
+  ];
+
+  return `
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">GENSHIN IMPACT SERVICE</div>
+
+        <h2>KENSHYN<br><span>JOKI SERVICE.</span></h2>
+
+        <p>
+          Platform layanan joki Genshin Impact untuk membantu progres akunmu.
+          Pilih layanan, gabungkan beberapa pesanan, lalu kirim rincian otomatis
+          melalui WhatsApp.
+        </p>
+
+        <div class="actions">
+          <button class="primary" data-scroll-services>
+            Jelajahi Layanan
+          </button>
+
+          <button class="outline" id="heroOrder">
+            Buat Pesanan
+          </button>
+
+          <a class="outline"
+             href="${TESTI_URL}"
+             target="_blank"
+             rel="noopener noreferrer"
+             style="display:inline-flex;align-items:center">
+            Lihat Testimoni
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-logo">
+        <div><span>KK</span></div>
+      </div>
+    </section>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-icon">01</div>
+        <div>
+          <b>Pilihan Layanan</b>
+          <small>Beragam kebutuhan akun</small>
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon">02</div>
+        <div>
+          <b>Multi Pesanan</b>
+          <small>Gabungkan beberapa joki</small>
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon">03</div>
+        <div>
+          <b>Harga Tertera</b>
+          <small>Total otomatis dihitung</small>
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon">04</div>
+        <div>
+          <b>WhatsApp Admin</b>
+          <small>Konfirmasi langsung</small>
+        </div>
+      </div>
+    </div>
+
+    <section class="section" id="services">
+      <div class="section-head">
+        <div>
+          <div class="kicker">OUR SERVICES</div>
+          <h2>Pilih Layanan</h2>
+        </div>
+
+        <p>
+          Tekan kartu layanan untuk membuka halaman harga.
+          Tambahkan layanan ke keranjang dan selesaikan semuanya dalam satu pesanan.
+        </p>
+      </div>
+
+      <div class="service-grid">
+        ${cards.map(c=>`
+          <button class="service-card reveal" data-page="${c[3]}">
+            <div class="card-icon">${c[0]}</div>
+            <h3>${c[1]}</h3>
+            <p>${c[2]}</p>
+
+            <div class="card-foot">
+              <span>LIHAT LAYANAN</span>
+              <span class="arrow">↗</span>
+            </div>
+          </button>
+        `).join("")}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="kicker">HOW IT WORKS</div>
+          <h2>Cara Pemesanan</h2>
+        </div>
+
+        <p>Alur pemesanan sederhana agar detail layanan tidak tercampur.</p>
+      </div>
+
+      <div class="service-grid">
+        <article class="service-card reveal">
+          <div class="card-icon">01</div>
+          <h3>Pilih Joki</h3>
+          <p>Pilih satu atau beberapa layanan dari katalog harga.</p>
+        </article>
+
+        <article class="service-card reveal">
+          <div class="card-icon">02</div>
+          <h3>Isi Detail</h3>
+          <p>Masukkan nama penerima, UID opsional, metode pembayaran, dan catatan.</p>
+        </article>
+
+        <article class="service-card reveal">
+          <div class="card-icon">03</div>
+          <h3>Konfirmasi WA</h3>
+          <p>Periksa total, lalu kirim format pesanan ke WhatsApp admin.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="page-top">
+        <div class="eyebrow">PAYMENT INFORMATION</div>
+
+        <h1>Pembayaran Mudah</h1>
+
+        <p>
+          DANA, GoPay, OVO, dan QRIS tersedia melalui konfirmasi admin.
+          Nomor tujuan transfer akan dicantumkan sesuai metode yang dipilih.
+          QRIS diminta langsung melalui WhatsApp.
+        </p>
+
+        <button class="primary"
+                id="paymentContact"
+                style="margin-top:17px">
+          Hubungi Admin
+        </button>
+      </div>
+    </section>
+  `;
+}
+
+/* PAGE ROUTER */
+
+function go(page){
+  active=page;
+
+  document.getElementById("links").classList.remove("open");
+
+  document.querySelectorAll(".links [data-page]").forEach(b=>{
+    b.classList.toggle("active",b.dataset.page===page);
+  });
+
+  if(page==="home"){
+    app.innerHTML=homeHTML();
+
+    bindPages();
+    reveal();
+
+    document.querySelector("[data-scroll-services]").onclick=()=>{
+      document.getElementById("services").scrollIntoView({
+        behavior:"smooth"
+      });
+    };
+
+    document.getElementById("heroOrder").onclick=checkout;
+    document.getElementById("paymentContact").onclick=contactAdmin;
+    return;
+  }
+
+  if(page==="daily"){
+    daily();
+    return;
+  }
+
+  render(page);
+}
+
+/* GAMBAR REGION */
+
+function cardHTML(item,page,i){
+  const [name,price,desc] = item;
+  const key=page+"-"+i;
+  const chosen=cart.some(x=>x.key===key);
+
+  /*
+    Semua gambar diambil dari folder:
+    Assets pict/Icon Post/
+
+    Nama file harus sesuai dengan file di Acode.
+  */
+
+  const regionImages = {
+    "Mondstadt":"mondstad.jpg",
+    "Liyue":"liyue.jpg",
+    "Inazuma":"inazuma.jpg",
+    "Sumeru":"semeru.jpg",
+    "Fontaine":"fontaine.jpg",
+    "Natlan":"natlan.jpg",
+    "Nod-Krai":"nodkrai.jpg",
+    "Snezhnaya":"nodkrai.jpg",
+    "Chenyu Vale":"liyue.jpg"
+  };
+
+  const imageName =
+    (page==="region" || page==="location")
+      ? regionImages[name]
+      : null;
+
+  const imagePath = imageName
+    ? "Assets pict/Icon Post/" + imageName
+    : "";
+
+  const timeText=page==="region"&&times[name]
+    ? `<small>Estimasi: ${times[name]}</small>`
+    : "";
+
+  return `
+    <article class="price-card reveal ${chosen?"selected":""}"
+             data-price="${price}">
+
+      <div class="price-image ${imagePath?"":"no-image"}">
+        ${imagePath ? `
+          <img
+            src="${imagePath}"
+            alt="Explore ${escapeHTML(name)}"
+            loading="lazy"
+            onerror="this.style.display='none';this.parentElement.classList.add('no-image')"
+          >
+        ` : ""}
+      </div>
+
+      <h3>${escapeHTML(name)}</h3>
+
+      <p class="desc">
+        ${escapeHTML(desc)}${timeText}
+      </p>
+
+      <div class="price-bottom">
+        <div class="price">
+          ${fmt(price)}
+          <small>
+            ${page==="location"||page==="world"
+              ?"Per lokasi"
+              :"Harga paket"}
+          </small>
+        </div>
+
+        <button class="add ${chosen?"added":""}"
+                data-add="${key}">
+          ${chosen?"✓ Dipilih":"+ Tambah"}
+        </button>
+      </div>
+    </article>
+  `;
+}
+
+/* KATALOG SETIAP PAGE */
+
+function render(page){
+  const d=info[page];
+
+  if(!d||!data[page])return;
+
+  app.innerHTML=`
+    <div class="page">
+
+      <section class="page-top">
+        <button class="back" data-page="home">
+          ← Kembali ke beranda
+        </button>
+
+        <div class="eyebrow">${d[1]}</div>
+        <h1>${d[0]}</h1>
+        <p>${d[2]}</p>
+      </section>
+
+      <div class="filters">
+        <button class="chip active" data-filter="all">
+          Semua layanan
+        </button>
+
+        <button class="chip" data-filter="low">
+          Di bawah 50.000 IDR
+        </button>
+
+        <button class="chip" data-filter="high">
+          50.000 IDR ke atas
+        </button>
+      </div>
+
+      <div class="price-grid">
+        ${data[page].map((x,i)=>cardHTML(x,page,i)).join("")}
+      </div>
+
+      <div class="note">
+        <b>Informasi layanan:</b>
+        Harga ditampilkan dalam IDR. Explore Location dihitung per lokasi.
+        Harga dan cakupan akhir dikonfirmasi admin sebelum pengerjaan dimulai.
+      </div>
+    </div>
+  `;
+
+  bindPages();
+  reveal();
+
+  /* TAMBAH / HAPUS LAYANAN */
+
+  document.querySelectorAll("[data-add]").forEach(button=>{
+    button.onclick=()=>{
+      const i=Number(button.dataset.add.split("-").pop());
+      const item=data[page][i];
+
+      toggle({
+        key:page+"-"+i,
+        name:item[0],
+        price:item[1],
+        desc:item[2]
+      });
+
+      render(page);
+    };
+  });
+
+  /* FILTER HARGA */
+
+  document.querySelectorAll("[data-filter]").forEach(button=>{
+    button.onclick=()=>{
+      document.querySelectorAll("[data-filter]").forEach(x=>{
+        x.classList.toggle("active",x===button);
+      });
+
+      document.querySelectorAll(".price-card").forEach(card=>{
+        const p=Number(card.dataset.price);
+        const f=button.dataset.filter;
+
+        card.style.display=
+          f==="all" ||
+          (f==="low"&&p<50000) ||
+          (f==="high"&&p>=50000)
+            ? ""
+            : "none";
+      });
+    };
+  });
+}
+
+/* DAILY ACCOUNT */
+
+function daily(){
+  app.innerHTML=`
+    <div class="page">
+
+      <section class="page-top">
+        <button class="back" data-page="home">
+          ← Kembali ke beranda
+        </button>
+
+        <div class="eyebrow">DAILY ACCOUNT SERVICE</div>
+        <h1>Daily Account</h1>
+
+        <p>
+          Pilih durasi layanan akun. Target pengerjaan, akses yang dibutuhkan,
+          dan batas quest dibicarakan terlebih dahulu dengan admin.
+        </p>
+      </section>
+
+      <div class="daily-grid">
+
+        <article class="daily-card reveal">
+          <div class="kicker">PAKET 7 HARI</div>
+          <h3>7 Days</h3>
+          <p>Untuk progres akun jangka pendek.</p>
+
+          <div class="daily-choice">
+            <span>
+              <b>Tanpa quest random</b><br>
+              <small>Daily rutin</small>
+            </span>
+
+            <b>20.000 IDR</b>
+            <button class="add" data-daily="7a">+ Tambah</button>
+          </div>
+
+          <div class="daily-choice">
+            <span>
+              <b>Include quest random</b><br>
+              <small>Target disepakati terlebih dahulu</small>
+            </span>
+
+            <b>40.000 IDR</b>
+            <button class="add" data-daily="7b">+ Tambah</button>
+          </div>
+        </article>
+
+        <article class="daily-card reveal">
+          <div class="kicker">PAKET 1 BULAN</div>
+          <h3>1 Month</h3>
+          <p>Untuk progres akun rutin selama satu bulan.</p>
+
+          <div class="daily-choice">
+            <span>
+              <b>Tanpa quest</b><br>
+              <small>Daily rutin</small>
+            </span>
+
+            <b>50.000 IDR</b>
+            <button class="add" data-daily="30a">+ Tambah</button>
+          </div>
+
+          <div class="daily-choice">
+            <span>
+              <b>Include quest</b><br>
+              <small>Target disepakati terlebih dahulu</small>
+            </span>
+
+            <b>70.000 IDR</b>
+            <button class="add" data-daily="30b">+ Tambah</button>
+          </div>
+        </article>
+
+      </div>
+
+      <article class="request-card reveal" style="margin-top:15px">
+        <div class="kicker">CUSTOM REQUEST</div>
+        <h3>Request Farming</h3>
+
+        <p>
+          Butuh grind artefak, ascension karakter, boss, atau material?
+          Tambahkan request, lalu tuliskan kebutuhanmu di catatan worker.
+          Harga dikonfirmasi admin.
+        </p>
+
+        <div class="tags">
+          <span class="tag">Grind artefak</span>
+          <span class="tag">Ascension</span>
+          <span class="tag">Boss</span>
+          <span class="tag">Material</span>
+        </div>
+
+        <button class="primary"
+                style="margin-top:17px"
+                id="requestFarming">
+          Tambah Request Farming
+        </button>
+      </article>
+
+      <div class="note">
+        <b>Catatan:</b>
+        Quest yang termasuk dalam paket harus ditentukan bersama admin.
+        Penyelesaian bergantung pada daftar target dan kondisi akun.
+      </div>
+    </div>
+  `;
+
+  bindPages();
+  reveal();
+
+  const packages={
+    "7a":["Daily Account — 7 Days (tanpa quest random)",20000],
+    "7b":["Daily Account — 7 Days (include quest random)",40000],
+    "30a":["Daily Account — 1 Month (tanpa quest)",50000],
+    "30b":["Daily Account — 1 Month (include quest)",70000]
+  };
+
+  document.querySelectorAll("[data-daily]").forEach(button=>{
+    button.onclick=()=>{
+      const [name,price]=packages[button.dataset.daily];
+      const key="daily-"+button.dataset.daily;
+
+      toggle({
+        key,
+        name,
+        price,
+        desc:"Paket Daily Account"
+      });
+
+      const selected=cart.some(x=>x.key===key);
+
+      button.textContent=selected?"✓ Dipilih":"+ Tambah";
+      button.classList.toggle("added",selected);
+    };
+  });
+
+  document.getElementById("requestFarming").onclick=()=>{
+    toggle({
+      key:"daily-request",
+      name:"Daily Account — Request Farming",
+      price:0,
+      desc:"Request grind artefak / ascension / boss / material; harga konfirmasi admin"
+    });
+  };
+}
+
+/* CART */
+
+function toggle(item){
+  const i=cart.findIndex(x=>x.key===item.key);
+
+  if(i>=0){
+    cart.splice(i,1);
+    toast("Layanan dihapus dari pesanan");
+  }else{
+    cart.push(item);
+    toast("Layanan ditambahkan");
+  }
+
+  updateCart();
+}
+
+function sum(){
+  return cart.reduce((total,item)=>total+item.price,0);
+}
+
+function updateCart(){
+  const n=cart.length;
+
+  document.getElementById("navCount").textContent=n;
+  document.getElementById("barCount").textContent=n;
+
+  document.getElementById("barItems").textContent=
+    n
+      ? cart.map(x=>x.name).join(", ")
+      : "Belum ada layanan dipilih";
+
+  document.getElementById("barTotal").textContent=fmt(sum());
+
+  document.getElementById("orderBar").classList.toggle("show",n>0);
+
+  if(document.getElementById("summaryList"))summary();
+}
+
+function summary(){
+  document.getElementById("summaryList").innerHTML=cart.map((x,i)=>`
+    <div class="summary-item">
+      <span>${i+1}. ${escapeHTML(x.name)}</span>
+      <b>${x.price?fmt(x.price):"Konfirmasi admin"}</b>
+    </div>
+  `).join("");
+
+  const custom=cart.some(x=>!x.price);
+
+  document.getElementById("summaryTotal").textContent=
+    fmt(sum())+(custom?" + request dikonfirmasi":"");
+}
+
+/* CHECKOUT */
+
+function checkout(){
+  if(!cart.length){
+    toast("Pilih minimal satu layanan terlebih dahulu");
+    return;
+  }
+
+  summary();
+
+  document.getElementById("backdrop").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+
+function closeCheckout(){
+  document.getElementById("backdrop").classList.remove("open");
+  document.body.style.overflow="";
+}
+
+function contactAdmin(){
+  const text="Halo admin Kenshyn Joki, aku mau tanya tentang layanan joki Genshin Impact.";
+
+  window.open(
+    "https://wa.me/"+WA+"?text="+encodeURIComponent(text),
+    "_blank"
+  );
+}
+
+/* NAVIGATION EVENTS */
+
+document.getElementById("openOrder").onclick=checkout;
+document.getElementById("navOrder").onclick=checkout;
+document.getElementById("close").onclick=closeCheckout;
+
+document.getElementById("navTesti").onclick=()=>{
+  window.open(TESTI_URL,"_blank","noopener,noreferrer");
+};
+
+document.getElementById("backdrop").onclick=e=>{
+  if(e.target.id==="backdrop")closeCheckout();
+};
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")closeCheckout();
+});
+
+document.getElementById("menu").onclick=()=>{
+  document.getElementById("links").classList.toggle("open");
+};
+
+document.getElementById("clear").onclick=()=>{
+  if(!cart.length){
+    closeCheckout();
+    return;
+  }
+
+  if(confirm("Kosongkan semua layanan yang dipilih?")){
+    cart=[];
+    updateCart();
+    closeCheckout();
+
+    if(active!=="home")go(active);
+
+    toast("Keranjang berhasil dikosongkan");
+  }
+};
+
+/* PAYMENT */
+
+document.getElementById("payment").onchange=e=>{
+  const method=e.target.value;
+  const info=document.getElementById("paymentInfo");
+
+  if(["DANA","GoPay","OVO"].includes(method)){
+    info.innerHTML=`
+      Pembayaran melalui <b>${escapeHTML(method)}</b>
+
+      <div style="margin-top:7px">
+        Salin nomor wallet di bawah, lalu tempel di aplikasi pembayaran.
+      </div>
+
+      <div class="wallet-row">
+        <span class="wallet-number" id="walletNumber">${PAYMENT_NUMBER}</span>
+
+        <button type="button"
+                class="copy-wallet"
+                id="copyWallet">
+          SALIN NOMOR
+        </button>
+      </div>
+
+      <div style="margin-top:9px">
+        Pastikan nomor tujuan benar sebelum transfer.
+        Setelah transfer, kirim screenshot bukti pembayaran lengkap kepada admin.
+      </div>
+    `;
+
+  }else if(method==="QRIS"){
+    info.innerHTML=`
+      Pembayaran melalui <b>QRIS</b><br>
+      QRIS tidak menggunakan nomor tujuan.
+      Hubungi admin melalui WhatsApp untuk mendapatkan kode QRIS resmi.
+      Setelah pembayaran, kirim screenshot bukti pembayaran lengkap.
+    `;
+
+  }else{
+    info.textContent=
+      "Pilih metode pembayaran untuk melihat instruksi pembayaran.";
+  }
+};
+
+/* COPY WALLET NUMBER */
+
+document.getElementById("paymentInfo").addEventListener("click",async e=>{
+  const button=e.target.closest("#copyWallet");
+
+  if(!button)return;
+
+  const number=PAYMENT_NUMBER;
+
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(number);
+    }else{
+      const temp=document.createElement("textarea");
+
+      temp.value=number;
+      temp.setAttribute("readonly","");
+      temp.style.position="fixed";
+      temp.style.opacity="0";
+
+      document.body.appendChild(temp);
+      temp.select();
+
+      const copied=document.execCommand("copy");
+
+      temp.remove();
+
+      if(!copied)throw new Error("Clipboard tidak tersedia");
+    }
+
+    button.textContent="TERSALIN ✓";
+    toast("Nomor wallet berhasil disalin");
+
+    setTimeout(()=>{
+      if(button.isConnected){
+        button.textContent="SALIN NOMOR";
+      }
+    },1800);
+
+  }catch(err){
+    toast("Salin manual nomor: "+number);
+  }
+});
+
+/* ORDER WHATSAPP */
+
+document.getElementById("orderForm").onsubmit=e=>{
+  e.preventDefault();
+
+  if(!cart.length){
+    toast("Keranjang masih kosong");
+    return;
+  }
+
+  const name=document.getElementById("recipient").value.trim();
+  const uid=document.getElementById("uid").value.trim();
+  const pay=document.getElementById("payment").value;
+  const payer=document.getElementById("payer").value.trim();
+  const note=document.getElementById("workerNote").value.trim();
+
+  if(!name||!pay){
+    toast("Lengkapi nama penerima dan pembayaran");
+    return;
+  }
+
+  const hour=new Date().getHours();
+
+  const greeting=
+    hour>=4&&hour<11?"Selamat pagi":
+    hour>=11&&hour<15?"Selamat siang":
+    hour>=15&&hour<18?"Selamat sore":
+    "Selamat malam";
+
+  const names=cart.map(x=>x.name).join(", ");
+
+  const lines=[
+    `${greeting} min, aku mau joki ${names}.`,
+    "",
+    "========== DETAIL PESANAN KENSHYN JOKI ==========",
+    `Penerima: ${name}`,
+    `UID: ${uid||"Tidak dicantumkan"}`,
+    `Pembayaran: ${pay}`,
+    `Nomor pengirim: ${payer||"Tidak dicantumkan"}`,
+    "",
+    "DAFTAR LAYANAN:",
+
+    ...cart.map((x,i)=>
+      `${i+1}. ${x.name} — ${x.price?fmt(x.price):"Harga dikonfirmasi admin"}`
+    ),
+
+    "",
+    `TOTAL SEMENTARA: ${fmt(sum())}`+
+      (cart.some(x=>!x.price)
+        ?" (belum termasuk request yang perlu dikonfirmasi)"
+        :""),
+
+    "",
+    "PESAN UNTUK WORKER:",
+    note||"Tidak ada catatan tambahan.",
+    "",
+
+    pay==="QRIS"
+      ?"CATATAN: Mohon kirim instruksi dan kode QRIS melalui WhatsApp."
+      :"CATATAN: Saya akan mengirim screenshot bukti transfer lengkap ke WhatsApp.",
+
+    "",
+    "Mohon konfirmasi detail pesanan dan antrean pengerjaan. Terima kasih.",
+    "=================================================="
+  ];
+
+  const url=
+    "https://wa.me/"+WA+"?text="+encodeURIComponent(lines.join("\n"));
+
+  window.open(url,"_blank");
+};
+
+/* SCROLL PROGRESS */
+
+window.addEventListener("scroll",()=>{
+  const max=document.documentElement.scrollHeight-window.innerHeight;
+
+  document.getElementById("progress").style.width=
+    (max>0?window.scrollY/max*100:0)+"%";
+},{passive:true});
+
+/* START */
+
+bindPages();
+go("home");
+updateCart();
+
+setTimeout(()=>{
+  document.getElementById("welcome").classList.add("hide");
+},1900);
+
+</script>
+</body>
+</html>
